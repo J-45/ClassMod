@@ -1,4 +1,5 @@
 https://en.wikipedia.org/wiki/SOCKS
+https://github.com/fengyouchao/esocks
 https://github.com/fengyouchao/sockslib
 https://www.ietf.org/rfc/rfc1928.txt
 https://www.ietf.org/rfc/rfc1929.txt
