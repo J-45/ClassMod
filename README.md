@@ -1,7 +1,7 @@
 # Socks5-Proxy
 TODO:   
   - Client & Server greeting
-  - Client & Server choice 
+  - Client & Server authentication choice 
   - Client authentication request
   - Server authentication response
   - Client connection request 
