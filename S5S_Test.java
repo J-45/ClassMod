@@ -14,11 +14,12 @@ import java.io.*;
 public class S5S_Test {
  // initialize socket and input output streams
  private Socket socket = null;
- private OutputStream out = null;
  private InputStream in = null;
+ private OutputStream out = null;
  private String address = "127.0.0.1";
  private int port = 5000;
- private ByteArrayOutputStream baos = null;
+ private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
  // constructor to put ip address and port
 
   // establish a connection
@@ -39,7 +40,8 @@ public class S5S_Test {
   @Test
   @DisplayName("greeting")
   void greeting_Test() throws IOException {
-	   byte[] clientGreeting = {(byte)0x05, (byte)0x01, (byte)0x02};
+//	   byte[] clientGreeting = {(byte)0x05, (byte)0x01, (byte)0x02};
+	   byte[] clientGreeting = {(byte)0x05, (byte)0x01, (byte)0x03};
 	   this.out.write(clientGreeting);
 
 	   String readableQuery = Arrays.toString(clientGreeting);
@@ -47,10 +49,8 @@ public class S5S_Test {
 	   System.out.println("Sent to server : " + readableQuery);
 
 	   // Receiving reply from server
-	   this.baos = new ByteArrayOutputStream();
 	   byte buffer[] = new byte[3];
 	   this.baos.write(buffer, 0 , this.in.read(buffer));
-	   
 	   byte result[] = this.baos.toByteArray();
 
 	   String res = Arrays.toString(result);
