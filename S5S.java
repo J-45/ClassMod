@@ -13,59 +13,60 @@ public class S5S
  private ServerSocket server = null; 
  private InputStream in  = null; 
  private OutputStream out = null;
-
+ private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+ private int port = 5000;
+ 
  // constructor with port 
- public S5S(int port) 
+ public S5S(int port) throws IOException 
  { 
   // starts server and waits for a connection 
-  try
-  { 
-   server = new ServerSocket(port); 
+
+   this.server = new ServerSocket(this.port); 
    System.out.println("Server started"); 
-
    System.out.println("Waiting for a client ..."); 
-
-   socket = server.accept(); 
-
+   this.socket = server.accept(); 
    System.out.println("Client accepted"); 
-
+   
    // takes input from the client socket 
-   in = new DataInputStream(socket.getInputStream()); 
+   this.in = new DataInputStream(this.socket.getInputStream()); 
    //writes on client socket
-   out = new DataOutputStream(socket.getOutputStream());
-
-   // Receiving data from client
-   ByteArrayOutputStream baos = new ByteArrayOutputStream();
-   byte buffer[] = new byte[3];
-   baos.write(buffer, 0 , in.read(buffer));
-   byte result[] = baos.toByteArray();
+   this.out = new DataOutputStream(this.socket.getOutputStream());
    
-   String res = Arrays.toString(result);
-   System.out.println("Recieved from client : "+res); 
-   
-   byte serverGreeting[] = new byte[]{5,2};
-   
-   //echoing back to client
-   if (Arrays.equals(result, new byte[] {5,1,2}) ) {
-	   out.write(serverGreeting);
-   }else {
-	   out.write(result);
+   while (greeting() != true) {
+	   // code block to be executed
    }
-   
-   
+
    System.out.println("Closing connection"); 
-
    // close connection 
-   socket.close(); 
-   in.close(); 
-  } 
-  catch(IOException i) 
-  { 
-   System.out.println(i); 
-  } 
- } 
+   this.socket.close(); 
+   this.in.close(); 
+   
+ }
+ 
+ public boolean greeting() throws IOException {
+	 
+	   // Receiving data from client
 
- public static void main(String args[]) 
+	   byte buffer[] = new byte[3];
+	   this.baos.write(buffer, 0 , this.in.read(buffer));
+	   byte result[] = this.baos.toByteArray();
+	   
+	   String readableRespond = Arrays.toString(result);
+	   System.out.println("Recieved from client : "+readableRespond); 
+	   
+	   byte serverGreeting[] = new byte[]{5,2};
+	   
+	   //echoing back to client
+	   if (Arrays.equals(result, new byte[] {5,1,2}) ) {
+		   this.out.write(serverGreeting);
+		   return true;
+	   }else {
+		   this.out.write(result);
+		   return false;
+	   }
+ }
+
+ public static void main(String args[]) throws IOException 
  { 
   new S5S(5000); 
  } 
