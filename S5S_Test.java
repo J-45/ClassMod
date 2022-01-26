@@ -74,6 +74,3 @@ public class S5S_Test {
 
 }
 
-
-//byte[] message = {(byte)0x05, (byte)0x01, (byte)0x02}; // perso
-
