@@ -74,12 +74,12 @@ public class S5S_Test {
 	   this.baos.write(buffer, 0 , this.in.read(buffer));
 	   byte result[] = this.baos.toByteArray();
 
-	   String res = Arrays.toString(result);
+	   String readableRespond = Arrays.toString(result);
 
 	   // printing reply to console
 	   // Recieved from server
-	   System.out.println("<< " + res);
-	   return res;
+	   System.out.println("<< " + readableRespond);
+	   return readableRespond;
   }
   
   @AfterEach
