@@ -26,9 +26,10 @@ public class S5S_Test {
 
   @BeforeEach
   void openSocket_Test() throws UnknownHostException, IOException {
+
 	  this.socket = new Socket(this.address, this.port);
 	   if (this.socket.isConnected()) {
-	    System.out.println("Connected");
+//	    System.out.println("Connected");
 	   }
 
 	   // sends output to the socket
@@ -38,15 +39,35 @@ public class S5S_Test {
   }
   
   @Test
-  @DisplayName("greeting")
+  @DisplayName("good greeting")
   void greeting_Test() throws IOException {
-//	   byte[] clientGreeting = {(byte)0x05, (byte)0x01, (byte)0x02};
-	   byte[] clientGreeting = {(byte)0x05, (byte)0x01, (byte)0x03};
-	   this.out.write(clientGreeting);
+	   byte[] clientGreeting = {(byte)0x05, (byte)0x01, (byte)0x02};
+	   String res = sendMessageToServer(clientGreeting);
+	   String goodResp = "[5, 2]";
+	   
+	   assertEquals(goodResp, res);
 
-	   String readableQuery = Arrays.toString(clientGreeting);
+  }
+  
+  @Test
+  @DisplayName("bad greeting")
+  void greeting2_Test() throws IOException {
+	   byte[] clientGreeting = {(byte)0x05, (byte)0x01, (byte)0x03};
+	   String res = sendMessageToServer(clientGreeting);
+	   String goodResp = "[5, -1]";
+	   
+	   assertEquals(goodResp, res);
+
+  }
+  
+  String sendMessageToServer(byte[] messageBytes) throws IOException {
+
+	   this.out.write(messageBytes);
+
+	   String readableQuery = Arrays.toString(messageBytes);
 	   //printing request to console
-	   System.out.println("Sent to server : " + readableQuery);
+	   // Sent to server :
+	   System.out.println(">> " + readableQuery);
 
 	   // Receiving reply from server
 	   byte buffer[] = new byte[3];
@@ -56,21 +77,18 @@ public class S5S_Test {
 	   String res = Arrays.toString(result);
 
 	   // printing reply to console
-	   System.out.println("Recieved from server : " + res);
-	   String goodResp = "[5, 2]";
-	   
-	   assertEquals(goodResp, res);
-
+	   // Recieved from server
+	   System.out.println("<< " + res);
+	   return res;
   }
   
   @AfterEach
   void closeSocket_Test() throws IOException {
 	  // close the connection
-	  this.in.close();
+	   this.in.close();
 	   this.out.close();
 	   this.socket.close();
-	   System.out.println("Deconnected");
+//	   System.out.println("Deconnected");
   }
 
 }
-
