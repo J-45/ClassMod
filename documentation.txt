@@ -1,7 +1,7 @@
 http://free-proxy.cz/fr/proxylist/country/all/socks5/ping/all
 https://en.wikipedia.org/wiki/SOCKS
-https://www.ietf.org/rfc/rfc1928.txt
-https://www.ietf.org/rfc/rfc1929.txt
+https://datatracker.ietf.org/doc/html/rfc1928
+https://datatracker.ietf.org/doc/html/rfc1929
 https://devstory.net/10393/java-socket
 https://www.devzoneoriginal.com/2020/07/java-socket-example-for-sending-and.html
 
