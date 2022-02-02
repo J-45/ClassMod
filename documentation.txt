@@ -7,3 +7,5 @@ https://www.devzoneoriginal.com/2020/07/java-socket-example-for-sending-and.html
 
 https://stackoverflow.com/questions/40026286/java-dataoutputstream-doesnt-write-all-messages-tcp-socket
 https://stackoverflow.com/questions/88838/how-to-convert-strings-to-and-from-utf8-byte-arrays-in-java
+https://stackoverflow.com/questions/9581530/converting-from-byte-to-int-in-java
+https://stackoverflow.com/questions/42231549/network-byte-order-to-host-byte-order-conversion-java
