@@ -7,15 +7,11 @@ import sys
 
 HOST = '0.0.0.0'
 SERVER_PORT = 8080
-
-
-
 VER = b'\x05' # SOCKS version
 NAUTH = b'\x01' # Number of authentication methods supported
 CAUTH = b'\x00' # chosen authentication method: 0x00: No authentication - 0x02: Username/password
 STATUS_SUCCESS = b'\x00'
 STATUS_FAIL = b'\xff'
-
 
 def create_socket():
     try:
@@ -88,6 +84,16 @@ def greeting(sock_handle):
     
     print(">Good authentication method found")
     print(f"Server got: \t{client_greeting}")
+    server_choice = VER + CAUTH
+    try:
+        sock_handle.sendall(server_choice)
+        print(f"Server sent: \t{server_choice}")
+    except socket.error:
+        traceback.print_exc()
+        return False
+
+    print(f">Greeting complete")
+
 
 def main():
 
@@ -103,16 +109,6 @@ def main():
 
     while True:
 
-        server_choice = VER + CAUTH
-        try:
-            sock_handle.sendall(server_choice)
-            print(f"Server sent: \t{server_choice}")
-        except socket.error:
-            traceback.print_exc()
-            return False
-
-        print(f">Greeting complete")
-        
         """
         Client Authentication
         """
