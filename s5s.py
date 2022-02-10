@@ -93,6 +93,7 @@ def greeting(sock_handle):
         return False
 
     print(f">Greeting complete")
+    return sock_handle
 
 
 def main():
