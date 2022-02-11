@@ -5,14 +5,12 @@ import socket
 HOST = '127.0.0.1'
 PORT = 8080
 
-# print (struct.pack('B', 5)) # b'\x05'
-
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket_handle:
     socket_handle.connect((HOST, PORT))
-    VER = b'\x05' # SOCKS version (0x05)
-    NAUTH = b'\x02' # Number of authentication methods supported, uint8
-    AUTH = b'\x02' # Authentication method = Username/password
-    CLIENT_GREETING = VER + NAUTH + b'\x00' + b'\x02'
+    VER = struct.pack('B', 5) # SOCKS version (0x05) >>> b'\x05'
+    NAUTH = struct.pack('B', 2) # Number of authentication methods supported, uint8
+    AUTH = struct.pack('B', 2) # Authentication method = Username/password
+    CLIENT_GREETING = VER + NAUTH + struct.pack('B', 0) + struct.pack('B', 2)
 
     print(f"Client sent:\t{CLIENT_GREETING}")
     socket_handle.sendall(CLIENT_GREETING)
@@ -20,7 +18,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket_handle:
     print(f"Client got:\t{server_response}")
     AssertThat(server_response).IsEqualTo(VER + AUTH)
 
-    AUTH = b'\x02'
+    AUTH = struct.pack('B', 2)
     ID = 'username'.encode()
     IDLEN = struct.pack('B', len(ID))
     PW = '123456'.encode()
@@ -36,9 +34,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket_handle:
     STATUS_SUCCESS = b'\x00' # 0x00 success, otherwise failure, connection must be closed
     AssertThat(server_response).IsEqualTo(AUTH + STATUS_SUCCESS)
 
-    CMD = b'\x01' # Zstablish a TCP/IP stream connection
-    RSV = b'\x00' # reserved, must be 0x00
-    TYPE = b'\x01' # Domain name
+    CMD = struct.pack('B', 1) # Zstablish a TCP/IP stream connection
+    RSV = struct.pack('B', 0) # reserved, must be 0x00
+    TYPE = struct.pack('B', 1) # Domain name
     DOMAIN = 'j45.eu'
     IPV4 = socket.gethostbyname(DOMAIN)
     print(f"IPV4:\t{IPV4}")
