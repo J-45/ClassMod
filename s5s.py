@@ -19,8 +19,8 @@ import struct
 # Configuration
 #
 MAX_THREADS = 200
-BUFSIZE = 2048
-TIMEOUT_SOCKET = 5
+BUFSIZE = 4096
+TIMEOUT_SOCKET = 2
 LOCAL_ADDR = '0.0.0.0'
 LOCAL_PORT = 8080
 # Parameter to bind a socket to a device, using SO_BINDTODEVICE
@@ -35,7 +35,7 @@ OUTGOING_INTERFACE = ""
 #
 '''Version of the protocol'''
 # PROTOCOL VERSION 5
-VER = struct.pack('B', 5) # b'\x05'
+VER = struct.pack('B', 5) # >>> b'\x05'
 '''Method constants'''
 # '00' NO AUTHENTICATION REQUIRED
 M_NOAUTH = struct.pack('B', 0)
@@ -253,7 +253,7 @@ def subnegotiation(wrapper):
     if CAUTH == PWD_AUTH:
 
         try:
-            client_authentication_request = wrapper.recv(4096)
+            client_authentication_request = wrapper.recv(BUFSIZE)
         except socket.error:
             traceback.print_exc()
             sys.exit(0)
