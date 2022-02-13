@@ -6,14 +6,13 @@
 # Network
 import socket
 import select
-from struct import pack, unpack
+import struct
 # System
 import traceback
 from threading import Thread, activeCount
 from signal import signal, SIGINT, SIGTERM
 from time import sleep
 import sys
-import struct
 
 #
 # Configuration
@@ -23,6 +22,9 @@ BUFSIZE = 4096
 TIMEOUT_SOCKET = 2
 LOCAL_ADDR = '0.0.0.0'
 LOCAL_PORT = 8080
+PROXY_USR = "username"
+PROXY_PWD = "123456"
+
 # Parameter to bind a socket to a device, using SO_BINDTODEVICE
 # Only root can set this option
 # If the name is an empty string or None, the interface is chosen when
@@ -33,6 +35,7 @@ OUTGOING_INTERFACE = ""
 #
 # Constants
 #
+
 '''Version of the protocol'''
 # PROTOCOL VERSION 5
 VER = struct.pack('B', 5) # >>> b'\x05'
@@ -115,7 +118,7 @@ def connect_to_dst(dst_addr, dst_port):
             EXIT.set_status(True)
     try:
         sock.connect((dst_addr, dst_port))
-        print("connect_to_dst ok")
+        # print("connect_to_dst ok")
         return sock
     except socket.error as err:
         error("Failed to connect to DST", err)
@@ -144,16 +147,21 @@ def request_client(wrapper):
     # IPV4
     if s5_request[3:4] == ATYP_IPV4:
         dst_addr = socket.inet_ntoa(s5_request[4:-2])
-        dst_port = unpack('>H', s5_request[8:len(s5_request)])[0]
+        dst_port = struct.unpack('>H', s5_request[8:len(s5_request)])[0]
     # DOMAIN NAME
     elif s5_request[3:4] == ATYP_DOMAINNAME:
         sz_domain_name = s5_request[4]
         dst_addr = s5_request[5: 5 + sz_domain_name - len(s5_request)]
         port_to_unpack = s5_request[5 + sz_domain_name:len(s5_request)]
-        dst_port = unpack('>H', port_to_unpack)[0]
+        dst_port = struct.unpack('>H', port_to_unpack)[0]
     else:
         return False
-    print(dst_addr, dst_port)
+    try:
+        domain = socket.gethostbyaddr(dst_addr)[0]
+        print(f"{domain} ({dst_addr}:{dst_port})")
+    except:
+        print(f"{dst_addr}:{dst_port}")
+
     return (dst_addr, dst_port)
 
 
@@ -176,12 +184,12 @@ def request(wrapper):
         socket_dst = connect_to_dst(dst[0], dst[1])
     if not dst or socket_dst == 0:
         rep = b'\x01'
-        print(dst, socket_dst, rep)
+        # print(dst, socket_dst, rep)
     else:
         rep = b'\x00'
         bnd = socket.inet_aton(socket_dst.getsockname()[0])
-        bnd += pack(">H", socket_dst.getsockname()[1])
-    print('request', rep)
+        bnd += struct.pack(">H", socket_dst.getsockname()[1])
+    # print('request', rep)
     reply = VER + rep + b'\x00' + ATYP_IPV4 + bnd
     try:
         wrapper.sendall(reply)
@@ -218,7 +226,7 @@ def subnegotiation_client(wrapper):
     # METHODS fields
     nmethods = identification_packet[1]
     methods = identification_packet[2:]
-    print("identification_packet:", identification_packet)
+    # print("identification_packet:", identification_packet)
     if len(methods) != nmethods:
         return M_NOTAVAILABLE
     for method in methods:
@@ -269,7 +277,7 @@ def subnegotiation(wrapper):
         PW_RANGE_START = 2 + client_authentication_request[1] + 1   # VER + IDLEN = 2 & PWLEN = 1
         PW = client_authentication_request[PW_RANGE_START:].decode()
 
-        if ID == 'username' and PW == '123456':
+        if ID == PROXY_USR and PW == PROXY_PWD:
             SERVER_AUTHENTICATION_RESPONSE = CAUTH + STATUS_SUCCESS
             print(f">Good username/password")
         else:
