@@ -1,0 +1,14 @@
+{
+    "name": "Jane Doe",
+    "description": "Just Another Chrome Extension",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
+    "action": {
+        "default_popup": "rules.html"
+    },
+    "options_page": "options.html"
+}

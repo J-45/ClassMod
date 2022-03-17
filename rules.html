@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <style>
+        body {
+            width: 400px;
+        }
+        
+        .search_input {
+            margin-bottom: 5px;
+        }
+        
+        button {
+            height: 20px;
+            width: 70px;
+            float: right;
+        }
+        
+        .forAll {
+            float: right;
+        }
+        
+        table {
+            clear: right;
+            width: 400px;
+            table-layout: fixed;
+            clear: right;
+            border: 1px solid black;
+            overflow: scroll;
+            max-height: 200px;
+        }
+        
+        tbody {
+            display: block;
+            height: 150px;
+            overflow: auto;
+        }
+        
+        thead,
+        tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            /* even columns width , fix width of table too*/
+        }
+        
+        thead {
+            width: calc( 100% - 1em)/* scrollbar is average 1em/16px width, remove it from thead width */
+        }
+        
+        table {
+            width: 400px;
+        }
+        
+        table>tbody>tr>th {
+            text-align: left;
+        }
+        
+        th {
+            width: 33%;
+        }
+        
+        td {
+            table-layout: fixed;
+            max-width: 33%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 5px;
+        }
+        
+        .new_input,
+        button {
+            line-height: 1em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <input placeholder="Filter" type="text" id="search" name="search" class="search_input" size="10" onkeypress="filter(this.value);">
+    <div class="forAll">Show all<input type="checkbox" name="" id=""></div>
+    <table id="rules">
+        <tr>
+            <th>Domain</th>
+            <th>Search</th>
+            <th>Replace By</th>
+        </tr>
+        <tr>
+            <td>chrome.com</td>
+            <td>".sdsdqds sdsdsd56f4sd5f4f4sd5d54f5sd56f15sd5qsds"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+        <tr>
+            <td>stackoverflow.com</td>
+            <td>".sdsdsdf5dss5ffs tab"</td>
+            <td>""</td>
+        </tr>
+    </table>
+    <input placeholder="domain.com" type="text" id="new_dom" name="new_dom" class="new_input" size="7">
+    <input placeholder=".old_class_string" type="text" id="new_s" name="new_s" class="new_input" size="11">
+    <input placeholder=".new_class_string" type="text" id="new_r" name="new_r" class="new_input" size="11">
+    <button class="btn" id="btn">Add rule</button>
+
+    <script src="rules.js"></script>
+</body>
+
+</html>
