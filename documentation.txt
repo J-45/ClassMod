@@ -1,5 +1,0 @@
-http://free-proxy.cz/fr/proxylist/country/all/socks5/ping/all
-https://en.wikipedia.org/wiki/SOCKS
-https://datatracker.ietf.org/doc/html/rfc1928
-https://datatracker.ietf.org/doc/html/rfc1929
-https://stackoverflow.com/questions/2269827/how-to-convert-an-int-to-a-hex-string/7470721#7470721
