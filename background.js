@@ -1,29 +1,40 @@
-console.log("Chilling");
-
-chrome.storage.sync.set({
-    "rules": [
-        ["d1|s1|r1"],
-        ["d2|s2|r2"]
-    ]
-}, function() {
-    console.log('Value is set to ' + String([
-        ["d1|s1|r1"],
-        ["d2|s2|r2"]
-    ]));
-});
+console.log("lets go");
 
 chrome.storage.sync.get(['rules'], function(result) {
-    console.log('Value currently is ' + result.rules);
-});
-
-chrome.action.onClicked.addListener(function(tab) {
-    chrome.action.setTitle({ tabId: tab.id, title: "You are on tab:" + tab.id });
+    console.log('rules: ' + JSON.stringify(result.rules));
+    if (!result.rules) {
+        chrome.storage.sync.set({
+            "rules": []
+        }, function() {
+            console.log('rules set to ' + String([]));
+        });
+    }
 });
 
 chrome.contextMenus.create({ title: 'My menu', id: 'my_menu' });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId = 'my_menu') {
-        console.log(info);
+        console.log("my_menu onClicked:", info);
     }
 })
+
+
+// chrome.tabs.onActivated.addListener((activeInfo) => {
+//     chrome.tabs.get(activeInfo.tabId, function(tab) {
+//         console.log(tabs);
+//     });
+// });
+
+
+chrome.tabs.query({
+    active: true,
+    currentWindow: true
+}, function(tabs) {
+    var tab = tabs[0];
+    console.log(tab);
+    var url = tab.url;
+
+    var gettingCurrent = browser.tabs.getCurrent()
+    console.log(gettingCurrent);
+});

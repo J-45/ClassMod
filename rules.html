@@ -20,6 +20,11 @@
         
         .forAll {
             float: right;
+            line-height: 1em;
+        }
+        
+        .forAll>input {
+            margin-bottom: -5px;
         }
         
         table {
@@ -80,66 +85,16 @@
 </head>
 
 <body>
-    <input placeholder="Filter" type="text" id="search" name="search" class="search_input" size="10" onkeypress="filter(this.value);">
+    <input placeholder="Filter" type="text" id="search" name="search" class="search_input" size="10">
     <div class="forAll">Show all<input type="checkbox" name="" id=""></div>
     <table id="rules">
-        <tr>
+        <!-- <tr>
             <th>Domain</th>
             <th>Search</th>
             <th>Replace By</th>
-        </tr>
-        <tr>
-            <td>chrome.com</td>
-            <td>".sdsdqds sdsdsd56f4sd5f4f4sd5d54f5sd56f15sd5qsds"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
-        <tr>
-            <td>stackoverflow.com</td>
-            <td>".sdsdsdf5dss5ffs tab"</td>
-            <td>""</td>
-        </tr>
+        </tr> -->
     </table>
-    <input placeholder="domain.com" type="text" id="new_dom" name="new_dom" class="new_input" size="7">
+    <input placeholder="domain.com" type="text" id="new_dom" name="new_dom" class="new_input" size="7" disabled>
     <input placeholder=".old_class_string" type="text" id="new_s" name="new_s" class="new_input" size="11">
     <input placeholder=".new_class_string" type="text" id="new_r" name="new_r" class="new_input" size="11">
     <button class="btn" id="btn">Add rule</button>
