@@ -3,12 +3,18 @@
     "description": "A Google chrome extension to modify class inside pages's html",
     "version": "1.0",
     "manifest_version": 3,
+    "content_scripts": [{
+        "matches": ["<all_urls>", "http://*/*", "https://*/*"],
+        "js": ["content-script.js"],
+        "run_at": "document_idle"
+    }],
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
+    "permissions": ["tabs", "webNavigation", "contextMenus", "storage", "activeTab", "scripting"],
     "action": {
         "default_popup": "rules.html"
     },
+    "host_permissions": ["<all_urls>", "http://*/*", "https://*/*"],
     "options_page": "options.html"
 }

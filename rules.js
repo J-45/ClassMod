@@ -4,7 +4,7 @@ document.getElementById("btn").addEventListener("click", async() => {
     var rules = [];
 
 
-    let new_dom = "domain.com";
+    let new_dom = document.getElementById('new_dom').value;
     let new_s = document.getElementById('new_s').value;
     let new_r = document.getElementById('new_r').value;
 
@@ -12,7 +12,7 @@ document.getElementById("btn").addEventListener("click", async() => {
         result.rules.forEach(one_rule => {
             rules.push(one_rule);
         });
-        if (new_s != '' && new_r != '') {
+        if (new_dom != '' && new_s != '') {
 
             rules.push(
                 [new_dom, new_s, new_r]
@@ -25,7 +25,7 @@ document.getElementById("btn").addEventListener("click", async() => {
             });
 
             display();
-
+            document.getElementById('new_dom').value = '';
             document.getElementById('new_s').value = '';
             document.getElementById('new_r').value = '';
         }
